@@ -1,0 +1,47 @@
+.view-data-list {
+    margin: rem(-4px) rem(-12px) rem(28px) rem(-12px);
+    padding: 0;
+    list-style: none;
+    columns: 4;
+
+    &__item {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: rem(30px);
+        margin: rem(4px) 0;
+        padding: 0 rem(12px);
+        font-size: rem(14px);
+        line-height: rem(22px);
+        border-radius: rem(20px);
+        cursor: pointer;
+        transition: 200ms ease-in-out;
+
+        svg {
+            flex-shrink: 0;
+            margin: 0 rem(-8px) 0 rem(8px);
+            transition: 200ms ease-in-out;
+        }
+
+        &:not(.is-active) {
+
+            svg {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        &--none {
+            color: $red;
+        }
+
+        &.is-active {
+            color: $blue;
+            background: rgba(0, 150, 242, .1);
+        }
+
+        &:hover {
+            color: $blue;
+        }
+    }
+}

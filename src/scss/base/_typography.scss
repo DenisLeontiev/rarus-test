@@ -1,0 +1,17 @@
+/**
+ *  Fonts
+ */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+$rem-baseline: 16px;
+
+html {
+    @include rem-baseline;
+
+	@media (max-width: 1023px) {
+        @include rem-baseline(80%);
+    }
+
+    font-family: $opensans;
+    color: $black;
+}

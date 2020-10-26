@@ -1,0 +1,24 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: rem(48px);
+    background-color: #D3DBE8;
+    border: none;
+    border-radius: rem(8px);
+    box-shadow: none;
+    color: $white;
+    
+    &:not(:disabled) {
+        cursor: pointer;
+        background-color: $green;
+    }
+
+    svg {
+        margin: 0 0 0 rem(8px);
+        fill: $white;
+    }
+
+
+}

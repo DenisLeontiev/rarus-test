@@ -1,0 +1,70 @@
+.view-app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: rem(30px) 0;
+    background: url('../images/fon.png') center no-repeat;
+    background-size: cover;
+    overflow: hidden;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        width: rem(1110px);
+        height: 100%;
+        margin: 0 auto;
+    }
+
+    &__header {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0 rem(16px) 0;
+        padding: rem(23px) 15px rem(17px) 0;
+        border-radius: rem(8px);
+        background-color: $darkBlue;
+        color: $white;
+
+        &__nav {
+            position: absolute;
+            top: 50%;
+            left: rem(24px);
+            display: flex;
+            align-items: center;
+            transform: translateY(-50%);
+            font-size: rem(14px);
+            line-height: rem(19px);
+            font-weight: 600;
+            color: $white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        svg {
+            margin: 0 rem(4px) 0 0;
+            fill: $white;
+        }
+
+        &__step {
+            margin: 0 rem(12px) 0 0;
+        }
+
+        &__title {
+            margin: 0;
+            font-size: rem(32px);
+            line-height: rem(40px);
+            font-weight: normal;
+        }
+    }
+
+    &__body {
+        height: 100%;
+        padding: rem(24px) rem(32px) rem(32px) rem(32px);
+        background-color: $white;
+        border-radius: rem(8px);
+        overflow-y: auto;
+    }
+}

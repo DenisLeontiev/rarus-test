@@ -7,6 +7,8 @@ const gulpWatch = require('gulp-watch');
 const gulpSourceMap = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const gulpStylelint = require('gulp-stylelint');
+const image = require('gulp-image');
+const historyFallback = require('connect-history-api-fallback');
 const webpackConfig = require('./webpack.config.js');
 
 gulp.task('stylesheets', () => gulp.src('./src/scss/**/*.scss')
@@ -16,6 +18,7 @@ gulp.task('stylesheets', () => gulp.src('./src/scss/**/*.scss')
             {
                 formatter: 'string',
                 console: true,
+                fix: true,
             },
         ],
     }))
@@ -37,6 +40,7 @@ gulp.task('stylesheetsProduction', () => gulp.src('./src/scss/**/*.scss')
             {
                 formatter: 'string',
                 console: true,
+                fix: true,
             },
         ],
     }))
@@ -48,7 +52,7 @@ gulp.task('stylesheetsProduction', () => gulp.src('./src/scss/**/*.scss')
     }))
     .pipe(gulp.dest('./build/css/')));
 
-gulp.task('js', () => gulp.src('./src/js/app.js')
+gulp.task('js', () => gulp.src('./src/js/main.js')
     .pipe(webpackStream(webpackConfig))
     .pipe(gulp.dest('./dev/js'))
     .pipe(browserSync.stream()));
@@ -56,14 +60,24 @@ gulp.task('js', () => gulp.src('./src/js/app.js')
 gulp.task('jsProduction', () => {
     webpackConfig.watch = false;
 
-    gulp.src('./src/js/app.js')
+    gulp.src('./src/js/main.js')
         .pipe(webpackStream(webpackConfig))
         .pipe(gulp.dest('./build/js'));
 });
 
+gulp.task('image', () => gulp.src('./src/images/*')
+    .pipe(image())
+    .pipe(gulp.dest('./dev/images'))
+    .pipe(browserSync.stream()));
+
+gulp.task('imageProduction', () => gulp.src('./src/images/*')
+    .pipe(image())
+    .pipe(gulp.dest('./build/images')));
+
 gulp.task('html', () => gulp.src('./src/template/**/*.html')
     .pipe(html())
-    .pipe(gulp.dest('./dev')));
+    .pipe(gulp.dest('./dev'))
+    .pipe(browserSync.stream()));
 
 gulp.task('htmlProduction', () => gulp.src('./src/template/**/*.html')
     .pipe(html())
@@ -73,6 +87,9 @@ gulp.task('watch', () => {
     gulpWatch(['./src/scss/**/*.scss'], () => {
         gulp.start('stylesheets');
     });
+    gulpWatch(['./src/images/**/*'], () => {
+        gulp.start('image');
+    });
     gulpWatch(['./src/template/**/*.html'], () => {
         gulp.start('html');
     });
@@ -80,7 +97,12 @@ gulp.task('watch', () => {
 
 gulp.task('server', () => {
     browserSync.init({
-        server: './dev',
+        server: {
+            baseDir: './dev',
+            middleware: [
+                historyFallback(),
+            ],
+        },
         open: true,
         port: 8081,
     });
@@ -89,6 +111,7 @@ gulp.task('server', () => {
 gulp.task('development', [
     'stylesheets',
     'js',
+    'image',
     'html',
     'watch',
     'server',
@@ -97,5 +120,6 @@ gulp.task('development', [
 gulp.task('production', [
     'stylesheetsProduction',
     'jsProduction',
+    'imageProduction',
     'htmlProduction',
 ]);

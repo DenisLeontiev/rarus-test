@@ -1,0 +1,16 @@
+.link {
+    display: inline-block;
+
+    > span {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        color: $blue;
+        cursor: pointer;
+
+        svg {
+            margin: 0 rem(6px) 0 0;
+            fill: $blue;
+        }
+    }
+}
