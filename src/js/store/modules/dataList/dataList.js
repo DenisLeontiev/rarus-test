@@ -1,4 +1,5 @@
 /* eslint no-shadow: ["error", { "allow": ["state", "getters"] }] */
+import axios from 'axios';
 
 import {
     SET_LOADER,
@@ -50,21 +51,14 @@ const mutations = {
 
 const actions = {
 
-    async loadData({ commit }) {
-        try {
-            const response = await fetch(
-                'https://jsonplaceholder.typicode.com/posts',
-                {
-                    method: 'GET',
-                },
-            );
-
-            const data = await response.json();
-
-            commit('SET_DATALIST', data.slice(60));
-        } catch (error) {
-            commit('SET_ERROR', error);
-        }
+    loadData({ commit }) {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(response => {
+                commit('SET_DATALIST', response.data.slice(60));
+            })
+            .catch(error => {
+                commit('SET_ERROR', error);
+            });
     },
 
     setCurrentItem({ commit }, id) {
